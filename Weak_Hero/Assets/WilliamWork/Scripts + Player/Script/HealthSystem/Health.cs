@@ -9,12 +9,15 @@ public class Health : MonoBehaviour
    [SerializeField] private float startHealth;
    public float currentHealth { get; private set; }
    private Animator animate;
-   private bool dead;
+   public bool dead;
 
    [Header("iFrames")]
    [SerializeField] private float IframeDur;
    [SerializeField] private int FlashNum;
    private SpriteRenderer spriteRende;
+
+   [SerializeField] private Behaviour[] components;
+   private bool invulnerable;
    
 
    private void Awake()
@@ -26,6 +29,7 @@ public class Health : MonoBehaviour
 
    public void Dmg(float _damage)
    {
+      if (invulnerable) return;
       currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startHealth);
 
       if (currentHealth > 0)
@@ -36,11 +40,36 @@ public class Health : MonoBehaviour
       }
       else
       {
-         //death
-         animate.SetTrigger("Death");
-         GetComponent<playerMovement>().enabled = false;
-         dead = true; 
-      }
+         if (!dead)
+         {
+
+            foreach (Behaviour component in components)
+               component.enabled = false;
+            
+            //death
+            animate.SetBool("Grounded", true);
+            animate.SetTrigger("Death");
+            GetComponent<playerMovement>().enabled = false;
+            dead = true; 
+         }
+         }
+      
+   }
+
+   
+   public void Respawn()
+   {
+      dead = false;
+      AddHealth(startHealth);
+      animate.ResetTrigger("Death");
+      animate.Play("Player_idle");
+      
+      
+
+     foreach (Behaviour component in components)
+         component.enabled = true;
+
+
    }
 
    public void AddHealth(float _value)
@@ -50,7 +79,9 @@ public class Health : MonoBehaviour
 
    private IEnumerator Invulnerability()
    {
+      
       //invincible duration
+      invulnerable = true;
       Physics2D.IgnoreLayerCollision(7,8, true);
       for (int i = 0; i < FlashNum; i++)
       {
@@ -62,6 +93,7 @@ public class Health : MonoBehaviour
       }
      
       Physics2D.IgnoreLayerCollision(7,8, false);
+      invulnerable = false;
    }
 
 

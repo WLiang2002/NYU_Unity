@@ -6,6 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Start.unity
+    path: Assets/WilliamWork/Scenes/Menu.unity
+    guid: 48a1a431c61f1a84ca5c5ea4c5e6f9e5
+  - enabled: 1
+    path: Assets/WilliamWork/Scenes/Start.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/WilliamWork/Scenes/Level 1.unity
+    guid: f4be2544107964a4c8925ef7f7cccc2c
+  - enabled: 1
+    path: Assets/WilliamWork/Scenes/Lvl_1Connect.unity
+    guid: 6b123f340dbb68143924c9d353f05594
+  - enabled: 1
+    path: Assets/WilliamWork/Scenes/Level 2.unity
+    guid: 30affaf3321a4ea44ac8f5059c94956b
   m_configObjects: {}
